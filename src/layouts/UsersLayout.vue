@@ -142,6 +142,6 @@ export default {
 
 <style>
 /* .user-list{
-  margin: 50px 50px;
+  height: 70%;
 } */
 </style>

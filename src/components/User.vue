@@ -1,8 +1,8 @@
 <template>
 <div @dblclick="onEditUser(), getUserIndex(fake)">
   <q-item class="fit row justify-center">
-            <q-item-section avatar class="col-1 content-center">
-              <q-avatar basic size="75px">
+            <q-item-section avatar class="col-1 content-center" @click="changeIcon(), getUserIndex(fake)">
+              <q-avatar basic size="60px">
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png">
               </q-avatar>
             </q-item-section>
@@ -27,6 +27,14 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+    <q-dialog
+      v-model="showModalIcon"
+    >
+      <q-uploader
+        url="http://localhost:4444/upload"
+        style="max-width: 300px"
+      ></q-uploader>
+    </q-dialog>
   </div>
 </template>
 
@@ -42,8 +50,8 @@ export default {
       return {
         showModal: false,
         showModalIcon: false,
-        // userIconSrc: "",
-        // dropzoneFile: "",
+        userIconSrc: "",
+        dropzoneFile: "",
       }
     },
     props: {
@@ -58,6 +66,10 @@ export default {
     ...mapActions(["letEditUser", "letEditIcon"]),
     onEditUser() {
       this.showModal = !this.showModal;
+    },
+    changeIcon() {
+      this.showModalIcon = !this.showModalIcon;
+      this.dropzoneFile = "";
     },
     onSubmitForm(data) {
       const editedUser = {
