@@ -12,24 +12,38 @@
             <q-item-section class="col-2 content-center">{{ fake.city }}</q-item-section>
             <q-item-section class="col-2 content-center">{{ fake.zip }}</q-item-section>
   </q-item>
-  <edit-user v-if="showModal === true" @onSubmitForm="onSubmitForm" :fake="fake"/>
+  <q-dialog
+      v-model="showModal"
+    >
+    <q-card>
+        <q-card-section>
+          <div class="text-h6">Edit User</div>
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+         <Form @onSubmitForm="onSubmitForm" :fake="fake"/>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" @click="close"></q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
-import EditUser from "../components/EditUser.vue"
+import Form from "../components/Form.vue"
 import { mapActions, mapGetters } from "vuex";
 export default {
     name: "User",
     components:{
-      EditUser
+      Form
     },
     data(){
       return {
         showModal: false,
         showModalIcon: false,
-        userIconSrc: "",
-        dropzoneFile: "",
+        // userIconSrc: "",
+        // dropzoneFile: "",
       }
     },
     props: {
@@ -57,6 +71,9 @@ export default {
       };
 
       this.letEditUser(editedUser);
+      this.showModal = !this.showModal;
+    },
+    close() {
       this.showModal = !this.showModal;
     },
 
