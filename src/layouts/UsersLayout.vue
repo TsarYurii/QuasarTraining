@@ -22,7 +22,7 @@
             </q-btn>
           </div>
         </div>
-        <q-btn @click="showNewUser = true">Новый пользователь</q-btn>
+        <q-btn @click="showModal">Новый пользователь</q-btn>
           <q-btn-group>
             <q-btn>ru</q-btn>
             <q-btn>en</q-btn>
@@ -31,7 +31,7 @@
       </div>
       
         <q-list class="user-list">
-          <user v-for="fake in getPaginatedUsers" :key="fake" :fake="fake"/>
+          <user v-for="fake in getPaginatedUsers" :key="fake.id" :fake="fake"/>
         </q-list>
         <pagination/>
 
@@ -43,7 +43,7 @@
         >
         </q-table> -->
 
-        <Form/>
+        
     </q-page-container>
 
     <!-- <q-footer reveal bordered class="bg-grey-8 text-white">
@@ -57,9 +57,7 @@
       </q-toolbar>
     </q-footer> -->
 
-    <q-dialog
-      v-model="showNewUser"
-    ></q-dialog>
+    <new-user/>
 
     
 
@@ -67,8 +65,8 @@
 </template>
 
 <script>
-import Form from "../components/Form.vue"
 import User from "../components/User.vue"
+import NewUser from "../components/NewUser.vue"
 import Pagination from "../components/Pagination.vue"
 import { mapGetters, mapActions } from "vuex";
 import {ref} from "vue"
@@ -79,7 +77,7 @@ export default {
   components: {
     User,
     Pagination,
-    Form
+    NewUser
   },
   data(){
     return{

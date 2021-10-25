@@ -115,8 +115,8 @@ export default store(function (/* { ssrContext } */) {
           }
       },
       getUserIndex: (state) => (fake) => {
-          state.fakeIndex = state.filteredData.indexOf(fake)
-          console.log(state.fakeIndex)
+          return state.filteredData.indexOf(fake)
+          
       }
   },
 
