@@ -22,6 +22,7 @@
             </q-btn>
           </div>
         </div>
+        <q-btn @click="showNewUser = true">Новый пользователь</q-btn>
           <q-btn-group>
             <q-btn>ru</q-btn>
             <q-btn>en</q-btn>
@@ -33,6 +34,16 @@
           <user v-for="fake in getPaginatedUsers" :key="fake" :fake="fake"/>
         </q-list>
         <pagination/>
+
+
+
+        <!-- <q-table
+          :rows="allFilteredData"
+          row-key="id"
+        >
+        </q-table> -->
+
+        <Form/>
     </q-page-container>
 
     <!-- <q-footer reveal bordered class="bg-grey-8 text-white">
@@ -46,20 +57,36 @@
       </q-toolbar>
     </q-footer> -->
 
+    <q-dialog
+      v-model="showNewUser"
+    ></q-dialog>
+
+    
+
   </q-layout>
 </template>
 
 <script>
+import Form from "../components/Form.vue"
 import User from "../components/User.vue"
 import Pagination from "../components/Pagination.vue"
 import { mapGetters, mapActions } from "vuex";
+import {ref} from "vue"
 
 
 
 export default {
   components: {
     User,
-    Pagination
+    Pagination,
+    Form
+  },
+  data(){
+    return{
+      columns: [
+
+      ]
+    }
   },
   computed: {
     ...mapGetters([
@@ -72,11 +99,11 @@ export default {
       "getSortByNameReverse",
       "getSortByCity",
       "getSortByCityReverse",
+      "tableData"
     ]),
   },
   async mounted() {
     this.fetchFakeData()
-    this.letMutatePagUsers()
   },
   methods: {
     ...mapActions([
@@ -106,6 +133,12 @@ export default {
       }
     },
   },
+  setup(){
+    return{
+      showNewUser : ref(false)
+    }
+  }
+  
 }
 </script>
 

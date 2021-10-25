@@ -25,7 +25,7 @@ export default store(function (/* { ssrContext } */) {
       isShowModal: false,
       searchBy: "by Name",
       usersPerPage: 10,
-      paginatedUsers: [],
+    //   paginatedUsers: [],
       pageNumber: 1,
       fakeIndex: ''
   },
@@ -49,8 +49,8 @@ export default store(function (/* { ssrContext } */) {
               state.searchBy = "by Name"
           }
       },
-      mutPageNumber(state, page) {
-          state.pageNumber = page
+      mutPageNumber(state, currentPage) {
+          state.pageNumber = currentPage
       },
       mutEditUser(state, editedUser) {
           state.filteredData.splice(state.fakeIndex, 1, editedUser)
@@ -60,15 +60,18 @@ export default store(function (/* { ssrContext } */) {
           state.filteredData.splice(state.fakeIndex, 1, editedUserIcon)
           state.fakeIndex = null
       },
-      mutPaginatedUsers(state){
-            let from = (state.pageNumber - 1) * state.usersPerPage
-            let to = from + state.usersPerPage
-            state.paginatedUsers = state.filteredData.slice(from, to)
-      }
+    //   mutPaginatedUsers(state){
+    //         let from = (state.pageNumber - 1) * state.usersPerPage
+    //         let to = from + state.usersPerPage
+    //         state.paginatedUsers = state.filteredData.slice(from, to)
+    //   }
   },
   getters: {
       allFilteredData(state) {
           return state.filteredData
+      },
+      tableData(state){
+        return state.filteredData[1]
       },
       changedShowModal(state) {
           return state.isShowModal
@@ -80,23 +83,25 @@ export default store(function (/* { ssrContext } */) {
           return Math.ceil(state.filteredData.length / state.usersPerPage)
       },
       getPaginatedUsers(state) {
-            return state.paginatedUsers
+        let from = (state.pageNumber - 1) * state.usersPerPage
+        let to = from + state.usersPerPage
+        return state.filteredData.slice(from, to)
       },
       getPageNumber(state) {
           return state.pageNumber
       },
-      getSortByName(state) {
-          state.filteredData.sort((a, b) => a.name.localeCompare(b.name))
-      },
-      getSortByNameReverse(state) {
-          state.filteredData.sort((a, b) => a.name.localeCompare(b.name)).reverse()
-      },
-      getSortByCity(state) {
-          state.filteredData.sort((a, b) => a.city.localeCompare(b.city))
-      },
-      getSortByCityReverse(state) {
-          state.filteredData.sort((a, b) => a.city.localeCompare(b.city)).reverse()
-      },
+    //   getSortByName(state) {
+    //       state.filteredData.sort((a, b) => a.name.localeCompare(b.name))
+    //   },
+    //   getSortByNameReverse(state) {
+    //       state.filteredData.sort((a, b) => a.name.localeCompare(b.name)).reverse()
+    //   },
+    //   getSortByCity(state) {
+    //       state.filteredData.sort((a, b) => a.city.localeCompare(b.city))
+    //   },
+    //   getSortByCityReverse(state) {
+    //       state.filteredData.sort((a, b) => a.city.localeCompare(b.city)).reverse()
+    //   },
       getUsersFilter: (state) => (search) => {
           state.pageNumber = 1
           if (state.searchBy === "by Name") {
@@ -133,8 +138,8 @@ export default store(function (/* { ssrContext } */) {
       changeSearchBy(context) {
           context.commit("updateSearchBy")
       },
-      onClickPage(context, page) {
-          context.commit("mutPageNumber", page)
+      onClickPage(context, currentPage) {
+          context.commit("mutPageNumber", currentPage)
       },
       letEditUser(context, editedUser) {
           // console.log("Action fake: " + fake)
