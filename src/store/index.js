@@ -2,6 +2,8 @@ import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
 import axios from 'src/boot/axios'
 import { api } from 'src/boot/axios'
+import db from "../boot/firebase"
+import { collection, query, onSnapshot } from "firebase/firestore"
 
 // import example from './module-example'
 
@@ -33,6 +35,10 @@ export default store(function (/* { ssrContext } */) {
       updateFakeData(state, data) {
           state.fakeData = data;
           state.filteredData = state.fakeData
+      },
+      updateFakeDataFB(state, userChange){
+        state.fakeData.unshift(userChange)
+        state.filteredData = state.fakeData
       },
       changeShowModal(state) {
           state.isShowModal = !state.isShowModal
@@ -127,6 +133,28 @@ export default store(function (/* { ssrContext } */) {
               const data = response.data.users                
               context.commit("updateFakeData", data)
           })
+      },
+      getFakeData(context){
+        const q = query(collection(db, 'users'));
+        let users = []
+        const unsubscribe = onSnapshot(q, snapshot => {
+        snapshot.docChanges().forEach(change => {
+          let userChange = change.doc.data()
+          if (change.type === 'added') {
+              console.log('New user: ', userChange)
+            users.unshift(userChange)
+            context.commit("updateFakeDataFB", userChange)
+            
+          }
+          if (change.type === 'modified') {
+              console.log('Modified user: ', userChange)
+          }
+          if (change.type === 'removed') {
+              console.log('Removed user: ', userChange)
+          }
+          console.log(users)
+        });
+      })
       },
       showModal(context) {
           context.commit("changeShowModal")

@@ -65,6 +65,10 @@
 </template>
 
 <script>
+// import db from "../boot/firebase"
+// import { collection, query, onSnapshot } from "firebase/firestore";
+
+
 import User from "../components/User.vue"
 import NewUser from "../components/NewUser.vue"
 import Pagination from "../components/Pagination.vue"
@@ -100,12 +104,16 @@ export default {
       "tableData"
     ]),
   },
-  async mounted() {
-    this.fetchFakeData()
+  // async mounted() {
+  //   this.fetchFakeData()
+  // },
+  mounted(){
+    this.getFakeData()
   },
   methods: {
     ...mapActions([
       "fetchFakeData",
+      "getFakeData",
       "showModal",
       "changeSearchBy",
       "sortByName",
