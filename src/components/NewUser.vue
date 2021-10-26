@@ -45,8 +45,7 @@ export default {
             street: data.street,
             city: data.city,
             zip: data.zip,
-            id: this.allFilteredData.length + 1,
-            icon: this.allFilteredData[0].icon,
+            icon: "https://cdn.quasar.dev/img/boy-avatar.png",
           }
           this.addNewUser(newUser)
       }

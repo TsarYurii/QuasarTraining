@@ -3,7 +3,8 @@
   <q-item class="fit row justify-center">
             <q-item-section avatar class="col-1 content-center" @click="changeIcon(), getUserIndex(fake)">
               <q-avatar basic size="60px">
-                <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                <img :src="fake.icon">
+                
               </q-avatar>
             </q-item-section>
             <q-item-section class="col-2 content-center">{{ fake.name }}</q-item-section>

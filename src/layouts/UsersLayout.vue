@@ -31,7 +31,15 @@
       </div>
       
         <q-list class="user-list">
+          <transition-group
+          appear
+            mode="out-in"
+            name="user"
+            enter-active-class="animated backInUp slower"
+            leave-active-class="animated backOutDown slower"
+          >
           <user v-for="fake in getPaginatedUsers" :key="fake.id" :fake="fake"/>
+          </transition-group>
         </q-list>
         <pagination/>
 

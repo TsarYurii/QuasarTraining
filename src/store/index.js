@@ -3,7 +3,8 @@ import { createStore } from 'vuex'
 import axios from 'src/boot/axios'
 import { api } from 'src/boot/axios'
 import db from "../boot/firebase"
-import { collection, query, onSnapshot } from "firebase/firestore"
+import { collection, query, onSnapshot, addDoc, updateDoc, doc, setDoc} from "firebase/firestore"
+import state from './module-example/state'
 
 // import example from './module-example'
 
@@ -35,11 +36,13 @@ export default store(function (/* { ssrContext } */) {
       updateFakeData(state, data) {
           state.fakeData = data;
           state.filteredData = state.fakeData
+          console.log(state.fakeIndex)
       },
       updateFakeDataFB(state, userChange){
         state.fakeData.unshift(userChange)
         state.filteredData = state.fakeData
       },
+      
       changeShowModal(state) {
           state.isShowModal = !state.isShowModal
       },
@@ -60,7 +63,7 @@ export default store(function (/* { ssrContext } */) {
       },
       mutEditUser(state, editedUser) {
           state.filteredData.splice(state.fakeIndex, 1, editedUser)
-          state.fakeIndex = null
+        //   console.log(state.fakeIndex)
       },
       mutEditUserIcon(state, editedUserIcon) {
           state.filteredData.splice(state.fakeIndex, 1, editedUserIcon)
@@ -121,7 +124,8 @@ export default store(function (/* { ssrContext } */) {
           }
       },
       getUserIndex: (state) => (fake) => {
-          return state.filteredData.indexOf(fake)
+          console.log(state.filteredData.indexOf(fake))
+          return state.fakeIndex = state.filteredData.indexOf(fake)
           
       }
   },
@@ -136,32 +140,37 @@ export default store(function (/* { ssrContext } */) {
       },
       getFakeData(context){
         const q = query(collection(db, 'users'));
-        let users = []
+        // let users = []
         const unsubscribe = onSnapshot(q, snapshot => {
         snapshot.docChanges().forEach(change => {
           let userChange = change.doc.data()
+          userChange.id = change.doc.id
           if (change.type === 'added') {
               console.log('New user: ', userChange)
-            users.unshift(userChange)
+            // users.unshift(userChange)
             context.commit("updateFakeDataFB", userChange)
             
           }
           if (change.type === 'modified') {
               console.log('Modified user: ', userChange)
+              context.commit("mutEditUser", userChange)
           }
           if (change.type === 'removed') {
               console.log('Removed user: ', userChange)
           }
-          console.log(users)
         });
       })
       },
       showModal(context) {
           context.commit("changeShowModal")
       },
-      addNewUser(context, newUser) {
-          context.commit("pushNewUser", newUser)
+       addNewUser(context, newUser) {
+        //   context.commit("pushNewUser", newUser)
           context.commit("changeShowModal")
+
+          const docRef = addDoc(collection(db, "users"), newUser);
+        // setDoc(doc(db, "users", newUser.id), newUser)
+          console.log("Document written with ID: ", docRef.id);
       },
       changeSearchBy(context) {
           context.commit("updateSearchBy")
@@ -171,7 +180,17 @@ export default store(function (/* { ssrContext } */) {
       },
       letEditUser(context, editedUser) {
           // console.log("Action fake: " + fake)
-          context.commit("mutEditUser", editedUser)
+        //   context.commit("mutEditUser", editedUser)
+          const washingtonRef = doc(db, "users", editedUser.id);
+
+            // Set the "capital" field of the city 'DC'
+             updateDoc(washingtonRef, {
+                name: editedUser.name,
+                email: editedUser.email,
+                street: editedUser.street,
+                city: editedUser.city ,
+                zip: editedUser.zip,
+            });
       },
       letEditIcon(context, editedUserIcon) {
           context.commit("mutEditUserIcon", editedUserIcon)
@@ -182,8 +201,8 @@ export default store(function (/* { ssrContext } */) {
   },
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only
-    strict: process.env.DEBUGGING
+    strict: false
   })
-
+//   process.env.DEBUGGING
   return Store
 })
