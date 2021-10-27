@@ -1,10 +1,9 @@
 <template>
-<div @dblclick="onEditUser(), getUserIndex(fake)">
+<div @dblclick="onEditUser(), getUserIndex(fake)" class="user">
   <q-item class="fit row justify-center">
             <q-item-section avatar class="col-1 content-center" @click="changeIcon(), getUserIndex(fake)">
               <q-avatar basic size="60px">
                 <img :src="fake.icon">
-                
               </q-avatar>
             </q-item-section>
             <q-item-section class="col-2 content-center">{{ fake.name }}</q-item-section>
@@ -18,13 +17,13 @@
     >
     <q-card>
         <q-card-section>
-          <div class="text-h6">Edit User</div>
+          <div class="text-h6">{{$t('editUser')}}</div>
         </q-card-section>
         <q-card-section class="q-pt-none">
          <Form @onSubmitForm="onSubmitForm" :fake="fake"/>
         </q-card-section>
         <q-card-actions align="right">
-          <q-btn flat label="OK" color="primary" @click="close"></q-btn>
+          <q-btn flat :label="$t('btnClose')" color="primary" @click="close"></q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -98,5 +97,8 @@ export default {
 </script>
 
 <style>
-
+.user:hover{
+  background-color: rgb(45,118,210);
+  cursor: pointer;
+}
 </style>

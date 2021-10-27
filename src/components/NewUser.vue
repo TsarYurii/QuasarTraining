@@ -4,7 +4,7 @@
     >
     <q-card>
         <q-card-section>
-          <div class="text-h6">New User</div>
+          <div class="text-h6">{{$t('newUser')}}</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
@@ -12,7 +12,7 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="OK" color="primary" @click="showModal"></q-btn>
+          <q-btn flat :label="$t('btnClose')" color="primary" @click="showModal"></q-btn>
         </q-card-actions>
       </q-card>
     

@@ -6,46 +6,41 @@
       <q-input
         filled
         v-model="name"
-        label="Your name *"
-        hint="Name and surname"
+        :label="$t('userListName')"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
       ></q-input>
       <q-input
         filled
         v-model="email"
-        label="Your email *"
-        hint="Name and surname"
+        :label="$t('userListEmail')"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
       ></q-input>
       <q-input
         filled
         v-model="street"
-        label="Your street *"
-        hint="street"
+        :label="$t('userListStreet')"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
       ></q-input>
       <q-input
         filled
         v-model="city"
-        label="Your city *"
-        hint="city"
+        :label="$t('userListCity')"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
       ></q-input>
       <q-input
         filled
         v-model="zip"
-        label="Your zip *"
-        hint="zip"
+        :label="$t('userListZip')"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
       ></q-input>
       <div>
-        <q-btn label="Submit" type="submit" color="primary"></q-btn>
-        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm"></q-btn>
+        <q-btn :label="$t('btnSbm')" type="submit" color="primary"></q-btn>
+        <q-btn :label="$t('btnReset')" type="reset" color="primary" flat class="q-ml-sm"></q-btn>
       </div>
     </q-form>
 

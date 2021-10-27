@@ -99,20 +99,21 @@ export default store(function (/* { ssrContext } */) {
       getPageNumber(state) {
           return state.pageNumber
       },
-    //   getSortByName(state) {
-    //       state.filteredData.sort((a, b) => a.name.localeCompare(b.name))
-    //   },
-    //   getSortByNameReverse(state) {
-    //       state.filteredData.sort((a, b) => a.name.localeCompare(b.name)).reverse()
-    //   },
-    //   getSortByCity(state) {
-    //       state.filteredData.sort((a, b) => a.city.localeCompare(b.city))
-    //   },
-    //   getSortByCityReverse(state) {
-    //       state.filteredData.sort((a, b) => a.city.localeCompare(b.city)).reverse()
-    //   },
+      getSortByName(state) {
+          state.filteredData.sort((a, b) => a.name.localeCompare(b.name))
+      },
+      getSortByNameReverse(state) {
+          state.filteredData.sort((a, b) => a.name.localeCompare(b.name)).reverse()
+      },
+      getSortByCity(state) {
+          state.filteredData.sort((a, b) => a.city.localeCompare(b.city))
+      },
+      getSortByCityReverse(state) {
+          state.filteredData.sort((a, b) => a.city.localeCompare(b.city)).reverse()
+      },
       getUsersFilter: (state) => (search) => {
           state.pageNumber = 1
+          console.log(search)
           if (state.searchBy === "by Name") {
               state.filteredData = state.fakeData.filter(data => {
                   return data.name.toLowerCase().includes(search.toLowerCase())
