@@ -31,7 +31,7 @@
       v-model="showModalIcon"
     >
       <q-uploader
-        url="http://localhost:4444/upload"
+        
         style="max-width: 300px"
       ></q-uploader>
     </q-dialog>
