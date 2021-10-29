@@ -1,50 +1,22 @@
 <template>
 <div @dblclick="onEditUser(), getUserIndex(fake)" class="user">
   <q-item class="fit row justify-center">
-            <q-item-section avatar class="col-1 content-center" @click="changeIcon(), getUserIndex(fake)">
-              <q-avatar basic size="60px">
-                <img :src="fake.icon">
-              </q-avatar>
-            </q-item-section>
             <q-item-section class="col-2 content-center">{{ fake.name }}</q-item-section>
-            <q-item-section class="col-2 content-center">{{ fake.emails }}</q-item-section>
+            <q-item-section class="col-2 content-center">
+                <q-item-section class="row" v-for="email in fake.emails" :email="email" :key="email.email">{{email.email}}</q-item-section>
+            </q-item-section>
             <q-item-section class="col-2 content-center">{{ fake.car.carId }}</q-item-section>
             <q-item-section class="col-2 content-center">{{ fake.city }}</q-item-section>
             <q-item-section class="col-2 content-center">{{ fake.zip }}</q-item-section>
   </q-item>
-  <q-dialog
-      v-model="showModal"
-    >
-    <q-card>
-        <q-card-section>
-          <div class="text-h6">{{$t('editUser')}}</div>
-        </q-card-section>
-        <q-card-section class="q-pt-none">
-         <Form @onSubmitForm="onSubmitForm" :fake="fake"/>
-        </q-card-section>
-        <q-card-actions align="right">
-          <q-btn flat :label="$t('btnClose')" color="primary" @click="close"></q-btn>
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-    <q-dialog
-      v-model="showModalIcon"
-    >
-      <q-uploader
-        
-        style="max-width: 300px"
-      ></q-uploader>
-    </q-dialog>
   </div>
 </template>
 
 <script>
-import Form from "../components/Form.vue"
 import { mapActions, mapGetters } from "vuex";
 export default {
-    name: "User",
+    name: "User2",
     components:{
-      Form
     },
     data(){
       return {
@@ -90,9 +62,6 @@ export default {
     },
 
   },
-  computed: {
-    ...mapGetters(["getUserIndex"])
-  }
 }
 </script>
 

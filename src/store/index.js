@@ -134,8 +134,9 @@ export default store(function (/* { ssrContext } */) {
 
   actions: {
       async fetchFakeData(context) {
-          api.get("https://my-json-server.typicode.com/TsarYurii/JsonServer/db").then((response) => {
-              const data = response.data.users                
+          api.get("https://157.90.168.151:8080/api/v1/drivers/all").then((response) => {
+              const data = response.data.data
+              console.log(data)                
               context.commit("updateFakeData", data)
           })
       },
