@@ -183,9 +183,9 @@ export default {
   {
     name: 'id',
     required: true,
-    label: 'Dessert (100g serving)',
+    label: 'ID',
     align: 'left',
-    field: row => row.name,
+    field: row => row.id,
     format: val => `${val}`,
     sortable: true
   },
@@ -276,5 +276,8 @@ export default {
 .selected{
   background-color: rgb(45,118,210);
   color: white;
+}
+.q-td{
+  background-color: #08c;
 }
 </style>
